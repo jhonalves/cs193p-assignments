@@ -15,8 +15,8 @@ class EmojiMemoryGame: ObservableObject {
         var color: String
     }
     
-    var themes: Array<Theme>
-    var currentTheme: Theme
+    private var themes: Array<Theme>
+    private var usedTheme: Theme
     
     func createMemoryGame(_ theme: Theme, numberOfPairsOfCards: Int) -> MemoryGame<String> {
         MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { pairIndex in
@@ -42,10 +42,10 @@ class EmojiMemoryGame: ObservableObject {
         let heartsTheme = Theme(name: "Hearts", contentSet: ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "💟"], numberOfPairsToShow: 5, color: "pink")
         
         themes = [sportsTheme, foodTheme, vehiclesTheme, animalsTheme, emojisTheme, heartsTheme]
-        currentTheme = sportsTheme
+        usedTheme = sportsTheme
         
         if let newTheme = themes.randomElement() {
-            currentTheme = newTheme
+            usedTheme = newTheme
             let pairsQuantity: Int
             if newTheme.numberOfPairsToShow < newTheme.contentSet.count {
                 pairsQuantity = newTheme.numberOfPairsToShow
@@ -56,7 +56,7 @@ class EmojiMemoryGame: ObservableObject {
             model = createMemoryGame(newTheme, numberOfPairsOfCards: pairsQuantity)
         }
         else {
-            model = createMemoryGame(currentTheme, numberOfPairsOfCards: currentTheme.numberOfPairsToShow)
+            model = createMemoryGame(usedTheme, numberOfPairsOfCards: usedTheme.numberOfPairsToShow)
         }
     }
     
@@ -68,6 +68,10 @@ class EmojiMemoryGame: ObservableObject {
         model.score
     }
     
+    var currentTheme: Theme {
+        usedTheme
+    }
+    
     // MARK: - Intent(s)
     
     func choose(_ card: MemoryGame<String>.Card) {
@@ -76,7 +80,7 @@ class EmojiMemoryGame: ObservableObject {
     
     func newGame() {
         if let newTheme = themes.randomElement() {
-            currentTheme = newTheme
+            usedTheme = newTheme
             let pairsQuantity: Int
             if newTheme.numberOfPairsToShow < newTheme.contentSet.count {
                 pairsQuantity = newTheme.numberOfPairsToShow
