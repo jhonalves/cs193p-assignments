@@ -11,18 +11,71 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(viewModel.cards) { card in
-                    CardView(card: card).aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
+        VStack{
+            HStack {
+                Text(viewModel.currentTheme.name).font(.largeTitle)
+                Spacer()
+                VStack {
+                    Text("Score").font(.title)
+                    Text(String(viewModel.score)).font(.largeTitle).foregroundColor(scoreColor(viewModel.score))
                 }
             }
+            .padding()
+            Spacer()
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                    ForEach(viewModel.cards) { card in
+                        CardView(card: card).aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
+                    }
+                }
+            }
+            .foregroundColor(themeColor(viewModel.currentTheme.color))
+            .padding()
+            Spacer()
+            Button (action: {
+                viewModel.newGame()
+            }, label: {
+                Text("New Game").font(.largeTitle)
+            })
+            .padding()
         }
-        .foregroundColor(.red)
-        .padding()
+    }
+    
+    func themeColor(_ colorName: String) -> Color {
+        switch colorName {
+        case "red":
+            return Color.red
+        case "blue":
+            return Color.blue
+        case "orange":
+            return Color.orange
+        case "green":
+            return Color.green
+        case "brown":
+            return Color.brown
+        case "pink":
+            return Color.pink
+            
+        default:
+            return Color.red
+        }
+    }
+    
+    func scoreColor(_ score: Int) -> Color {
+        var color = Color.black
+        
+        if score > 0 {
+            color = Color.green
+        } else if score < 0 {
+            color = Color.red
+        } else {
+            color = Color.black
+        }
+        
+        return color
     }
 }
 
