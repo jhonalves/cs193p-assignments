@@ -65,14 +65,14 @@ struct ContentView: View {
     }
     
     func scoreColor(_ score: Int) -> Color {
-        var color = Color.black
+        var color = Color.primary
         
         if score > 0 {
             color = Color.green
         } else if score < 0 {
             color = Color.red
         } else {
-            color = Color.black
+            color = Color.primary
         }
         
         return color
