@@ -16,7 +16,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     private var themes: Array<Theme>
-    private var usedTheme: Theme
+    private var chosenTheme: Theme
     
     func createMemoryGame(_ theme: Theme, numberOfPairsOfCards: Int) -> MemoryGame<String> {
         MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { pairIndex in
@@ -42,10 +42,10 @@ class EmojiMemoryGame: ObservableObject {
         let heartsTheme = Theme(name: "Hearts", contentSet: ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "💟"], numberOfPairsToShow: 5, color: "pink")
         
         themes = [sportsTheme, foodTheme, vehiclesTheme, animalsTheme, emojisTheme, heartsTheme]
-        usedTheme = sportsTheme
+        chosenTheme = sportsTheme
         
         if let newTheme = themes.randomElement() {
-            usedTheme = newTheme
+            chosenTheme = newTheme
             let pairsQuantity: Int
             if newTheme.numberOfPairsToShow < newTheme.contentSet.count {
                 pairsQuantity = newTheme.numberOfPairsToShow
@@ -56,7 +56,7 @@ class EmojiMemoryGame: ObservableObject {
             model = createMemoryGame(newTheme, numberOfPairsOfCards: pairsQuantity)
         }
         else {
-            model = createMemoryGame(usedTheme, numberOfPairsOfCards: usedTheme.numberOfPairsToShow)
+            model = createMemoryGame(chosenTheme, numberOfPairsOfCards: chosenTheme.numberOfPairsToShow)
         }
     }
     
@@ -69,7 +69,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     var currentTheme: Theme {
-        usedTheme
+        chosenTheme
     }
     
     // MARK: - Intent(s)
@@ -80,7 +80,7 @@ class EmojiMemoryGame: ObservableObject {
     
     func newGame() {
         if let newTheme = themes.randomElement() {
-            usedTheme = newTheme
+            chosenTheme = newTheme
             let pairsQuantity: Int
             if newTheme.numberOfPairsToShow < newTheme.contentSet.count {
                 pairsQuantity = newTheme.numberOfPairsToShow
