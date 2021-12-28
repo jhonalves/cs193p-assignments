@@ -8,17 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		16031E922773B2DB005F82CB /* SetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16031E912773B2DB005F82CB /* SetApp.swift */; };
-		16031E942773B2DB005F82CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16031E932773B2DB005F82CB /* ContentView.swift */; };
+		16031E942773B2DB005F82CB /* SoloSetGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16031E932773B2DB005F82CB /* SoloSetGameView.swift */; };
 		16031E962773B2DD005F82CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16031E952773B2DD005F82CB /* Assets.xcassets */; };
 		16031E992773B2DD005F82CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16031E982773B2DD005F82CB /* Preview Assets.xcassets */; };
+		162B22E92777D0D5002BD101 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B22E82777D0D5002BD101 /* AspectVGrid.swift */; };
+		16D31971277ABA41006F2DC4 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D31970277ABA41006F2DC4 /* SetGame.swift */; };
+		16D31973277ACCE4006F2DC4 /* SoloSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16031E8E2773B2DB005F82CB /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16031E912773B2DB005F82CB /* SetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApp.swift; sourceTree = "<group>"; };
-		16031E932773B2DB005F82CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		16031E932773B2DB005F82CB /* SoloSetGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoloSetGameView.swift; sourceTree = "<group>"; };
 		16031E952773B2DD005F82CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16031E982773B2DD005F82CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		162B22E82777D0D5002BD101 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		16D31970277ABA41006F2DC4 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoloSetGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				16031E912773B2DB005F82CB /* SetApp.swift */,
-				16031E932773B2DB005F82CB /* ContentView.swift */,
+				16D31970277ABA41006F2DC4 /* SetGame.swift */,
+				16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */,
+				16031E932773B2DB005F82CB /* SoloSetGameView.swift */,
+				162B22E82777D0D5002BD101 /* AspectVGrid.swift */,
 				16031E952773B2DD005F82CB /* Assets.xcassets */,
 				16031E972773B2DD005F82CB /* Preview Content */,
 			);
@@ -137,8 +146,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16031E942773B2DB005F82CB /* ContentView.swift in Sources */,
+				16031E942773B2DB005F82CB /* SoloSetGameView.swift in Sources */,
 				16031E922773B2DB005F82CB /* SetApp.swift in Sources */,
+				16D31971277ABA41006F2DC4 /* SetGame.swift in Sources */,
+				162B22E92777D0D5002BD101 /* AspectVGrid.swift in Sources */,
+				16D31973277ACCE4006F2DC4 /* SoloSetGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
