@@ -19,7 +19,7 @@ class SoloSetGame: ObservableObject {
             for shape in cardShape.allCases {
                 for number in CardNumber.allCases {
                     for shading in cardShading.allCases {
-                        cardsSet.append(Card.init(color: color, shape: shape, quantity: number, shading: shading, id: cardID))
+                        cardsSet.append(Card.init(color: color, shape: shape, number: number, shading: shading, id: cardID))
                         cardID += 1
                     }
                 }

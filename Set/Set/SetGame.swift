@@ -8,8 +8,8 @@
 import Foundation
 
 struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
-    var cards: Array<Card>
-    var selectedCards: Array<Card>
+    private(set) var cards: Array<Card>
+    private(set) var selectedCards: Array<Card>
     
     func choose(_ card: Card) {
         
@@ -25,7 +25,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         var isMatched = false
         var color: CardColor
         var shape: CardShape
-        var quantity: CardNumber
+        var number: CardNumber
         var shading: CardShading
         let id: Int
     }

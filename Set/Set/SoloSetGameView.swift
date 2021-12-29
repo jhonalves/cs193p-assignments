@@ -20,7 +20,7 @@ struct SoloSetGameView: View {
 struct CardView: View {
     let card: SoloSetGame.Card
     
-    var body: some View {
+    @ViewBuilder var body: some View {
         let shape = RoundedRectangle(cornerRadius: 20)
         
         ZStack {
@@ -29,22 +29,46 @@ struct CardView: View {
                 .foregroundColor(.white)
             RoundedRectangle(cornerRadius: 20)
                 .stroke(lineWidth: 4)
-            switch card.shape {
-            case .diamond:
-                Text("<>")
-                    .font(.title)
-                    .foregroundColor(.blue)
-            case .oval:
-                Text("o")
-                    .font(.largeTitle)
-                    .foregroundColor(.blue)
-            case .rectangle:
-                Text("[]")
-                    .font(.largeTitle)
-                    .foregroundColor(.blue)
+            VStack {
+                ForEach(0..<card.number.rawValue) {_ in
+                    switch card.shape {
+                    case .diamond:
+                        Ellipse()
+                            .padding()
+                    case .rectangle:
+                        Rectangle()
+                            .padding()
+                    case .oval:
+                        Capsule()
+                            .padding()
+                    }
+                }
+                .foregroundColor(cardColor(card: card))
             }
         }
         .foregroundColor(.red)
+    }
+    
+    private func cardColor(card: SoloSetGame.Card) -> Color {
+        switch card.color {
+        case .red:
+            return Color.red
+        case .green:
+            return Color.green
+        case .purple:
+            return Color.purple
+        }
+    }
+    
+    private func cardShape(card: SoloSetGame.Card) -> String {
+        switch card.shape {
+        case .diamond:
+            return "a"
+        case .rectangle:
+            return "b"
+        case .oval:
+            return "c"
+        }
     }
 }
 
