@@ -10,6 +10,9 @@ import SwiftUI
 class SoloSetGame: ObservableObject {
     typealias Card = SetGame<cardColor, cardShape, CardNumber, cardShading>.Card
     
+    init() {
+        model.deal(numberOfCardsToDeal: 12)
+    }
     
     private static func createCardsSet() -> SetGame<cardColor, cardShape, CardNumber, cardShading> {
         var cardsSet: Array<Card> = []
@@ -33,6 +36,15 @@ class SoloSetGame: ObservableObject {
     
     var cards: Array<Card> {
         model.cards
+    }
+    var deck: Array<Card> {
+        model.deck
+    }
+    var onTableCards: Array<Card> {
+        model.onTableCards
+    }
+    var matchedCards: Array<Card> {
+        model.matchedCards
     }
     var selectedCards: Array<Card> {
         model.selectedCards

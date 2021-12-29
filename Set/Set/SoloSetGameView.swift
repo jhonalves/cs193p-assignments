@@ -11,7 +11,7 @@ struct SoloSetGameView: View {
     @ObservedObject var game: SoloSetGame
     
     var body: some View {
-        AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
+        AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
             CardView(card: card)
         }
     }
