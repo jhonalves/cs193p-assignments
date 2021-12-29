@@ -24,6 +24,22 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         deck = newDeck
     }
     
+    mutating func newGame(cardsSet: Array<Card>, numberOfCardsToDeal: Int) {
+        var newDeck: Array<Card>
+        var newOnTable: Array<Card>
+        
+        cards = cardsSet.shuffled()
+        deck = cards
+        onTableCards = []
+        matchedCards = []
+        selectedCards = []
+        
+        newDeck = Array(deck[numberOfCardsToDeal...])
+        newOnTable = Array(deck[..<numberOfCardsToDeal])
+        deck = newDeck
+        onTableCards.append(contentsOf: newOnTable)
+    }
+    
     func choose(_ card: Card) {
         
     }

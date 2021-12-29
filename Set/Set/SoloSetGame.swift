@@ -11,10 +11,10 @@ class SoloSetGame: ObservableObject {
     typealias Card = SetGame<cardColor, cardShape, CardNumber, cardShading>.Card
     
     init() {
-        model.deal(numberOfCardsToDeal: 12)
+        newGame()
     }
     
-    private static func createCardsSet() -> SetGame<cardColor, cardShape, CardNumber, cardShading> {
+    private static func getCardsSet() -> Array<Card> {
         var cardsSet: Array<Card> = []
         var cardID = 0
         
@@ -28,6 +28,12 @@ class SoloSetGame: ObservableObject {
                 }
             }
         }
+        
+        return cardsSet
+    }
+    
+    private static func createCardsSet() -> SetGame<cardColor, cardShape, CardNumber, cardShading> {
+        let cardsSet = getCardsSet()
         
         return SetGame<cardColor, cardShape, CardNumber, cardShading>(cardsSet: cardsSet)
     }
@@ -52,6 +58,10 @@ class SoloSetGame: ObservableObject {
     
     func deal(numberOfCardsToDeal: Int) {
         model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
+    }
+    
+    func newGame(numberOfCardsToDeal: Int = 12) {
+        model.newGame(cardsSet: SoloSetGame.getCardsSet(), numberOfCardsToDeal: numberOfCardsToDeal)
     }
     
     enum cardColor: CaseIterable {

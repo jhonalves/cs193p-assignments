@@ -16,12 +16,21 @@ struct SoloSetGameView: View {
                 CardView(card: card)
             }
             Spacer()
-            Button (action: {
-                game.deal(numberOfCardsToDeal: 3)
-            }, label: {
-                Text("Deal").font(.largeTitle)
-            })
-            .padding()
+            HStack {
+                Button (action: {
+                    game.newGame()
+                }, label: {
+                    Text("New Game").font(.largeTitle)
+                })
+                .padding()
+                Spacer()
+                Button (action: {
+                    game.deal(numberOfCardsToDeal: 3)
+                }, label: {
+                    Text("Deal").font(.largeTitle)
+                })
+                .padding()
+            }
         }
     }
 }
