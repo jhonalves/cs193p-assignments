@@ -11,8 +11,17 @@ struct SoloSetGameView: View {
     @ObservedObject var game: SoloSetGame
     
     var body: some View {
-        AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
-            CardView(card: card)
+        VStack {
+            AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
+                CardView(card: card)
+            }
+            Spacer()
+            Button (action: {
+                game.deal(numberOfCardsToDeal: 3)
+            }, label: {
+                Text("Deal").font(.largeTitle)
+            })
+            .padding()
         }
     }
 }

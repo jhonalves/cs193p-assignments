@@ -50,6 +50,10 @@ class SoloSetGame: ObservableObject {
         model.selectedCards
     }
     
+    func deal(numberOfCardsToDeal: Int) {
+        model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
+    }
+    
     enum cardColor: CaseIterable {
         case green
         case red
