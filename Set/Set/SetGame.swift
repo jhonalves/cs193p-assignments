@@ -18,10 +18,17 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         var newDeck: Array<Card>
         var newOnTable: Array<Card>
         
-        newDeck = Array(deck[numberOfCardsToDeal...])
-        newOnTable = Array(deck[..<numberOfCardsToDeal])
-        onTableCards.append(contentsOf: newOnTable)
-        deck = newDeck
+        if deck.count >= numberOfCardsToDeal {
+            newDeck = Array(deck[numberOfCardsToDeal...])
+            newOnTable = Array(deck[..<numberOfCardsToDeal])
+            deck = newDeck
+            onTableCards.append(contentsOf: newOnTable)
+        } else {
+            newDeck = []
+            newOnTable = deck
+            deck = newDeck
+            onTableCards.append(contentsOf: newOnTable)
+        }
     }
     
     mutating func newGame(cardsSet: Array<Card>, numberOfCardsToDeal: Int) {
@@ -29,7 +36,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         var newOnTable: Array<Card>
         
         cards = cardsSet.shuffled()
-        deck = cards
+        deck = Array(cards[..<21])
         onTableCards = []
         matchedCards = []
         selectedCards = []
