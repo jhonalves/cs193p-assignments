@@ -13,7 +13,19 @@ struct SoloSetGameView: View {
     var body: some View {
         VStack {
             AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
-                CardView(card: card).padding(6.0)
+                if ((game.selectedCards.first { $0.id == card.id }) == nil) {
+                    CardView(card: card, selected: false)
+                        .padding(6.0)
+                        .onTapGesture {
+                            game.select(card)
+                        }
+                } else {
+                    CardView(card: card, selected: true)
+                        .padding(6.0)
+                        .onTapGesture {
+                            game.diselect(card)
+                        }
+                }
             }
             Spacer()
             HStack {
@@ -47,39 +59,33 @@ struct SoloSetGameView: View {
 
 struct CardView: View {
     let card: SoloSetGame.Card
+    let selected: Bool
     
     @ViewBuilder var body: some View {
         let shape = RoundedRectangle(cornerRadius: 10)
         
         ZStack {
-            shape
-                .fill()
-                .foregroundColor(.white)
-            shape.strokeBorder(lineWidth: 4)
-            VStack {
-                ForEach(0..<card.number.rawValue) {_ in
-                    switch card.shape {
-                    case .diamond:
-                        Ellipse()
-                            .padding(.vertical)
-                    case .rectangle:
-                        Rectangle()
-                            .padding(.vertical)
-                    case .oval:
-                        Capsule()
-                            .padding(.vertical)
-                    }
-                }
-                .foregroundColor(cardColor(card: card))
+            if !selected {
+                shape
+                    .fill()
+                    .foregroundColor(.white)
+                shape.strokeBorder(lineWidth: 4)
+                cardContent
+            } else {
+                shape
+                    .fill()
+                    .foregroundColor(.white)
+                shape.strokeBorder(lineWidth: 6)
+                    .foregroundColor(.blue)
+                cardContent
             }
-            .padding(.horizontal, 10)
         }
     }
     
     private func cardColor(card: SoloSetGame.Card) -> Color {
         switch card.color {
         case .red:
-            return Color.red
+            return Color.pink
         case .green:
             return Color.green
         case .purple:
@@ -96,6 +102,27 @@ struct CardView: View {
         case .oval:
             return "c"
         }
+    }
+    
+    var cardContent: some View {
+        VStack {
+            Text(String(card.id))
+            ForEach(0..<card.number.rawValue) {_ in
+                switch card.shape {
+                case .diamond:
+                    Ellipse()
+                        .padding(.vertical)
+                case .rectangle:
+                    Rectangle()
+                        .padding(.vertical)
+                case .oval:
+                    Capsule()
+                        .padding(.vertical)
+                }
+            }
+            .foregroundColor(cardColor(card: card))
+        }
+        .padding(.horizontal, 10)
     }
 }
 

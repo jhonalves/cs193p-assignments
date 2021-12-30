@@ -47,8 +47,12 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         onTableCards.append(contentsOf: newOnTable)
     }
     
-    func choose(_ card: Card) {
-        
+    mutating func select(_ card: Card) {
+        selectedCards.append(card)
+    }
+    
+    mutating func diselect(_ card: Card) {
+        selectedCards = selectedCards.filter { $0.id != card.id }
     }
     
     init(cardsSet: Array<Card>) {

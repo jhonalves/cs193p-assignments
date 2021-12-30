@@ -84,4 +84,14 @@ class SoloSetGame: ObservableObject {
         case red
         case purple
     }
+    
+    // MARK: - Intent(s)
+    
+    func select(_ card: Card) {
+        model.select(card)
+    }
+    
+    func diselect(_ card: Card) {
+        model.diselect(card)
+    }
 }
