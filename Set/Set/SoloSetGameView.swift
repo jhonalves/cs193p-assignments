@@ -17,7 +17,7 @@ struct SoloSetGameView: View {
                 Spacer()
                 VStack {
                     Text("Score").font(.title)
-                    Text(String(game.score))
+                    Text(String(game.score)).font(.largeTitle)
                 }
             }
             .padding()
@@ -81,6 +81,7 @@ struct CardView: View {
                 .foregroundColor(.white)
             if !selected {
                 shape.strokeBorder(lineWidth: 4)
+                    .foregroundColor(.black)
             } else {
                 shape.strokeBorder(lineWidth: 6)
                     .foregroundColor(.blue)

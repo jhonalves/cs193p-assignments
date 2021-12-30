@@ -65,13 +65,20 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                 }
             }
         } else {
-            print("***")
+            var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
+            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
+            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
             selectedCards = [card]
             matchOnTable = false
-            deal(numberOfCardsToDeal: 3)
         }
     }
     
@@ -79,13 +86,20 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         if !matchOnTable {
             selectedCards = selectedCards.filter { $0.id != card.id }
         } else {
-            print("---")
+            var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
+            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
+            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
+            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+            deck.remove(at: 0)
             selectedCards = []
             matchOnTable = false
-            deal(numberOfCardsToDeal: 3)
         }
     }
     
