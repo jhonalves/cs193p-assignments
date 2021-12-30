@@ -55,6 +55,12 @@ class SoloSetGame: ObservableObject {
     var selectedCards: Array<Card> {
         model.selectedCards
     }
+    var score: Int {
+        model.score
+    }
+    var matchOnTable: Bool {
+        model.matchOnTable
+    }
     
     func deal(numberOfCardsToDeal: Int) {
         model.deal(numberOfCardsToDeal: numberOfCardsToDeal)

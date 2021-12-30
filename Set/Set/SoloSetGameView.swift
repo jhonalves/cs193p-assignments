@@ -17,7 +17,7 @@ struct SoloSetGameView: View {
                 Spacer()
                 VStack {
                     Text("Score").font(.title)
-                    Text("0")
+                    Text(String(game.score))
                 }
             }
             .padding()
@@ -26,7 +26,7 @@ struct SoloSetGameView: View {
                     CardView(card: card, selected: false)
                         .padding(6.0)
                         .onTapGesture {
-                            if game.selectedCards.count < 3 {
+                            if game.selectedCards.count < 3 || game.matchOnTable {
                                 game.select(card)
                             }
                         }
@@ -121,10 +121,10 @@ struct CardView: View {
                     .fill()
             case .striped:
                 Ellipse()
-                    .strokeBorder(lineWidth: 3)
+                    .opacity(0.4)
             case .open:
                 Ellipse()
-                    .opacity(0.4)
+                    .strokeBorder(lineWidth: 3)
             }
         case .rectangle:
             switch card.shading {
@@ -133,10 +133,10 @@ struct CardView: View {
                     .fill()
             case .striped:
                 Rectangle()
-                    .strokeBorder(lineWidth: 3)
+                    .opacity(0.4)
             case .open:
                 Rectangle()
-                    .opacity(0.4)
+                    .strokeBorder(lineWidth: 3)
             }
         case .oval:
             switch card.shading {
@@ -145,10 +145,10 @@ struct CardView: View {
                     .fill()
             case .striped:
                 Capsule()
-                    .strokeBorder(lineWidth: 3)
+                    .opacity(0.4)
             case .open:
                 Capsule()
-                    .opacity(0.4)
+                    .strokeBorder(lineWidth: 3)
             }
         }
     }

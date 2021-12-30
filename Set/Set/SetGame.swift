@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
+struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: Equatable, CardShape: Equatable, CardNumber: Equatable, CardShading: Equatable {
     private(set) var cards: Array<Card>
     private(set) var deck: Array<Card>
     private(set) var onTableCards: Array<Card>
     private(set) var matchedCards: Array<Card>
     private(set) var selectedCards: Array<Card>
+    var score: Int = 0
+    var matchOnTable: Bool = false
     
     mutating func deal(numberOfCardsToDeal: Int) {
         var newDeck: Array<Card>
@@ -36,7 +38,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
         var newOnTable: Array<Card>
         
         cards = cardsSet.shuffled()
-        deck = Array(cards[..<21])
+        deck = cards
         onTableCards = []
         matchedCards = []
         selectedCards = []
@@ -48,11 +50,93 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> {
     }
     
     mutating func select(_ card: Card) {
-        selectedCards.append(card)
+        if !matchOnTable {
+            selectedCards.append(card)
+            if selectedCards.count > 2 {
+                if checkMatch() {
+                    score += 1
+                    matchOnTable = true
+                    matchedCards.append(contentsOf: selectedCards)
+                }
+                else {
+                    if score > 0 {
+                        score -= 1
+                    }
+                }
+            }
+        } else {
+            print("***")
+            onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
+            selectedCards = [card]
+            matchOnTable = false
+            deal(numberOfCardsToDeal: 3)
+        }
     }
     
     mutating func diselect(_ card: Card) {
-        selectedCards = selectedCards.filter { $0.id != card.id }
+        if !matchOnTable {
+            selectedCards = selectedCards.filter { $0.id != card.id }
+        } else {
+            print("---")
+            onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
+            selectedCards = []
+            matchOnTable = false
+            deal(numberOfCardsToDeal: 3)
+        }
+    }
+    
+    mutating func checkMatch() -> Bool {
+        if (selectedCards[0].color == selectedCards[1].color &&
+            selectedCards[1].color == selectedCards[2].color) {
+            print(selectedCards[0].color, selectedCards[1].color, selectedCards[2].color)
+            //pass
+        } else if (selectedCards[0].color != selectedCards[1].color &&
+                   selectedCards[1].color != selectedCards[2].color &&
+                   selectedCards[0].color != selectedCards[2].color ) {
+            print(selectedCards[0].color, selectedCards[1].color, selectedCards[2].color)
+        } else {
+            return false
+        }
+        
+        if (selectedCards[0].shape == selectedCards[1].shape &&
+            selectedCards[1].shape == selectedCards[2].shape) {
+            print(selectedCards[0].shape, selectedCards[1].shape, selectedCards[2].shape)
+            //pass
+        } else if (selectedCards[0].shape != selectedCards[1].shape &&
+                   selectedCards[1].shape != selectedCards[2].shape &&
+                   selectedCards[0].shape != selectedCards[2].shape ) {
+            print(selectedCards[0].shape, selectedCards[1].shape, selectedCards[2].shape)
+        } else {
+            return false
+        }
+        
+        if (selectedCards[0].number == selectedCards[1].number && selectedCards[1].number == selectedCards[2].number) {
+            print(selectedCards[0].number, selectedCards[1].number, selectedCards[2].number)
+            //pass
+        } else if (selectedCards[0].number != selectedCards[1].number &&
+                   selectedCards[1].number != selectedCards[2].number &&
+                   selectedCards[0].number != selectedCards[2].number ) {
+            print(selectedCards[0].number, selectedCards[1].number, selectedCards[2].number)
+        } else {
+            return false
+        }
+        
+        if (selectedCards[0].shading == selectedCards[1].shading && selectedCards[1].shading == selectedCards[2].shading) {
+            print(selectedCards[0].shading, selectedCards[1].shading, selectedCards[2].shading)
+            //pass
+        } else if (selectedCards[0].shading != selectedCards[1].shading &&
+                   selectedCards[1].shading != selectedCards[2].shading &&
+                   selectedCards[0].shading != selectedCards[2].shading ) {
+            print(selectedCards[0].shading, selectedCards[1].shading, selectedCards[2].shading)
+        } else {
+            return false
+        }
+        
+        return true
     }
     
     init(cardsSet: Array<Card>) {
