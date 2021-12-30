@@ -12,12 +12,23 @@ struct SoloSetGameView: View {
     
     var body: some View {
         VStack {
+            HStack {
+                Text("Set Game").font(.largeTitle)
+                Spacer()
+                VStack {
+                    Text("Score").font(.title)
+                    Text("0")
+                }
+            }
+            .padding()
             AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
                 if ((game.selectedCards.first { $0.id == card.id }) == nil) {
                     CardView(card: card, selected: false)
                         .padding(6.0)
                         .onTapGesture {
-                            game.select(card)
+                            if game.selectedCards.count < 3 {
+                                game.select(card)
+                            }
                         }
                 } else {
                     CardView(card: card, selected: true)
@@ -65,20 +76,20 @@ struct CardView: View {
         let shape = RoundedRectangle(cornerRadius: 10)
         
         ZStack {
+            shape
+                .fill()
+                .foregroundColor(.white)
             if !selected {
-                shape
-                    .fill()
-                    .foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 4)
-                cardContent
             } else {
-                shape
-                    .fill()
-                    .foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 6)
                     .foregroundColor(.blue)
-                cardContent
             }
+            VStack {
+                cardContent()
+                .foregroundColor(cardColor(card: card))
+            }
+            .padding(10)
         }
     }
     
@@ -104,27 +115,26 @@ struct CardView: View {
         }
     }
     
-    var cardContent: some View {
+    private func cardContent() -> some View {
         VStack {
-            Text(String(card.id))
-            ForEach(0..<card.number.rawValue) {_ in
+            Spacer()
+            ForEach(0..<card.number.rawValue, id: \.self) {_ in
                 switch card.shape {
                 case .diamond:
                     Ellipse()
-                        .padding(.vertical)
+                        .frame(height: 20)
                 case .rectangle:
                     Rectangle()
-                        .padding(.vertical)
+                        .frame(height: 20)
                 case .oval:
                     Capsule()
-                        .padding(.vertical)
+                        .frame(height: 20)
                 }
             }
-            .foregroundColor(cardColor(card: card))
+            Spacer()
         }
-        .padding(.horizontal, 10)
     }
-}
+} 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
