@@ -142,18 +142,18 @@ struct CardView: View {
         case .oval:
             switch card.shading {
             case .solid:
-                Capsule()
+                Diamond()
                     .fill()
             case .striped:
-                Capsule()
+                Diamond()
                     .opacity(0.4)
             case .open:
-                Capsule()
-                    .strokeBorder(lineWidth: 3)
+                Diamond()
+                    .stroke(lineWidth: 3)
             }
         }
     }
-} 
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
