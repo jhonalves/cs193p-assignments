@@ -54,10 +54,18 @@ struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiabl
             columnCount = itemCount
         }
         
-        if floor(size.width / CGFloat(columnCount)) < size.width / 5 {
-            return size.width / 5
+        if UIDevice.current.orientation.isPortrait {
+            if floor(size.width / CGFloat(columnCount)) < size.width / 5 {
+                return size.width / 5
+            } else {
+                return floor(size.width / CGFloat(columnCount))
+            }
         } else {
-            return floor(size.width / CGFloat(columnCount))
+            if floor(size.width / CGFloat(columnCount)) < size.width / 9 {
+                return size.width / 9
+            } else {
+                return floor(size.width / CGFloat(columnCount))
+            }
         }
     }
 }
