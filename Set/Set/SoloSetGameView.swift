@@ -87,9 +87,16 @@ struct CardView: View {
             }
             VStack {
                 cardContent()
-                .foregroundColor(cardColor(card: card))
+                    .foregroundColor(cardColor(card: card))
             }
             .padding(10)
+        }
+    }
+    
+    private func cardContent() -> some View {
+        ForEach(0..<card.number.rawValue, id: \.self) {_ in
+            cardShape()
+                .frame(height: 20)
         }
     }
     
@@ -104,34 +111,45 @@ struct CardView: View {
         }
     }
     
-    private func cardShape(card: SoloSetGame.Card) -> String {
+    @ViewBuilder
+    private func cardShape() -> some View {
         switch card.shape {
         case .diamond:
-            return "a"
-        case .rectangle:
-            return "b"
-        case .oval:
-            return "c"
-        }
-    }
-    
-    private func cardContent() -> some View {
-        VStack {
-            Spacer()
-            ForEach(0..<card.number.rawValue, id: \.self) {_ in
-                switch card.shape {
-                case .diamond:
-                    Ellipse()
-                        .frame(height: 20)
-                case .rectangle:
-                    Rectangle()
-                        .frame(height: 20)
-                case .oval:
-                    Capsule()
-                        .frame(height: 20)
-                }
+            switch card.shading {
+            case .solid:
+                Ellipse()
+                    .fill()
+            case .striped:
+                Ellipse()
+                    .strokeBorder(lineWidth: 3)
+            case .open:
+                Ellipse()
+                    .opacity(0.4)
             }
-            Spacer()
+        case .rectangle:
+            switch card.shading {
+            case .solid:
+                Rectangle()
+                    .fill()
+            case .striped:
+                Rectangle()
+                    .strokeBorder(lineWidth: 3)
+            case .open:
+                Rectangle()
+                    .opacity(0.4)
+            }
+        case .oval:
+            switch card.shading {
+            case .solid:
+                Capsule()
+                    .fill()
+            case .striped:
+                Capsule()
+                    .strokeBorder(lineWidth: 3)
+            case .open:
+                Capsule()
+                    .opacity(0.4)
+            }
         }
     }
 } 

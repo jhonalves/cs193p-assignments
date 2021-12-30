@@ -80,9 +80,9 @@ class SoloSetGame: ObservableObject {
         case three = 3
     }
     enum cardShading: CaseIterable {
-        case green
-        case red
-        case purple
+        case solid
+        case striped
+        case open
     }
     
     // MARK: - Intent(s)
