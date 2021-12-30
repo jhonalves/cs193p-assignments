@@ -67,16 +67,22 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         } else {
             var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             selectedCards = [card]
             matchOnTable = false
         }
@@ -88,16 +94,22 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         } else {
             var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
-            onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-            deck.remove(at: 0)
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
+                deck.remove(at: 0)
+            }
             selectedCards = []
             matchOnTable = false
         }
