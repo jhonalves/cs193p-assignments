@@ -125,7 +125,7 @@ struct CardView: View {
                     .opacity(0.4)
             case .open:
                 Ellipse()
-                    .strokeBorder(lineWidth: 3)
+                    .stroke(lineWidth: 3)
             }
         case .rectangle:
             switch card.shading {
@@ -137,7 +137,7 @@ struct CardView: View {
                     .opacity(0.4)
             case .open:
                 Rectangle()
-                    .strokeBorder(lineWidth: 3)
+                    .stroke(lineWidth: 3)
             }
         case .oval:
             switch card.shading {

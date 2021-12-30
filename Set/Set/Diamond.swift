@@ -11,12 +11,10 @@ struct Diamond: Shape {
     
     func path(in rect: CGRect) -> Path {
         
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        let top = CGPoint(x: center.x + rect.height/2, y: rect.midY)
-        let left = CGPoint(x: rect.midX, y: center.y - rect.midY)
-        let bottom = CGPoint(x: center.x - rect.height/2, y: rect.midY)
-        let right = CGPoint(x: rect.midX, y: center.y + rect.midY)
-        
+        let top = CGPoint(x: rect.midX, y: rect.maxY)
+        let left = CGPoint(x: rect.minX, y: rect.midY)
+        let bottom = CGPoint(x: rect.midX, y: rect.minY)
+        let right = CGPoint(x: rect.maxX, y: rect.midY)
         
         var p = Path()
         p.move(to: top)
