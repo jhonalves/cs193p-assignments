@@ -23,7 +23,7 @@ struct SoloSetGameView: View {
             .padding()
             AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
                 if ((game.selectedCards.first { $0.id == card.id }) == nil) {
-                    CardView(card: card, selected: false)
+                    CardView(card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
                         .padding(6.0)
                         .onTapGesture {
                             if game.selectedCards.count < 3 || game.matchOnTable {
@@ -31,7 +31,7 @@ struct SoloSetGameView: View {
                             }
                         }
                 } else {
-                    CardView(card: card, selected: true)
+                    CardView(card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
                         .padding(6.0)
                         .onTapGesture {
                             game.diselect(card)
@@ -71,6 +71,8 @@ struct SoloSetGameView: View {
 struct CardView: View {
     let card: SoloSetGame.Card
     let selected: Bool
+    let matchOnTable: Bool
+    let noMatchOnTable: Bool
     
     @ViewBuilder var body: some View {
         let shape = RoundedRectangle(cornerRadius: 10)
@@ -79,11 +81,17 @@ struct CardView: View {
             shape
                 .fill()
                 .foregroundColor(.white)
-            if !selected {
+            if matchOnTable {
+                shape.strokeBorder(lineWidth: 6)
+                    .foregroundColor(.green)
+            } else if noMatchOnTable {
+                shape.strokeBorder(lineWidth: 6)
+                    .foregroundColor(.red)
+            } else if !selected {
                 shape.strokeBorder(lineWidth: 4)
                     .foregroundColor(.black)
             } else {
-                shape.strokeBorder(lineWidth: 6)
+                shape.strokeBorder(lineWidth: 4)
                     .foregroundColor(.blue)
             }
             VStack {
@@ -118,13 +126,13 @@ struct CardView: View {
         case .diamond:
             switch card.shading {
             case .solid:
-                Ellipse()
+                Diamond()
                     .fill()
             case .striped:
-                Ellipse()
+                Diamond()
                     .opacity(0.4)
             case .open:
-                Ellipse()
+                Diamond()
                     .stroke(lineWidth: 3)
             }
         case .rectangle:
@@ -142,13 +150,13 @@ struct CardView: View {
         case .oval:
             switch card.shading {
             case .solid:
-                Diamond()
+                Capsule()
                     .fill()
             case .striped:
-                Diamond()
+                Capsule()
                     .opacity(0.4)
             case .open:
-                Diamond()
+                Capsule()
                     .stroke(lineWidth: 3)
             }
         }

@@ -15,6 +15,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     private(set) var selectedCards: Array<Card>
     var score: Int = 0
     var matchOnTable: Bool = false
+    var noMatchOnTable: Bool = false
     
     mutating func deal(numberOfCardsToDeal: Int) {
         var newDeck: Array<Card>
@@ -59,6 +60,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                     matchedCards.append(contentsOf: selectedCards)
                 }
                 else {
+                    noMatchOnTable = true
                     if score > 0 {
                         score -= 1
                     }
@@ -85,12 +87,14 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             }
             selectedCards = [card]
             matchOnTable = false
+            noMatchOnTable = false
         }
     }
     
     mutating func diselect(_ card: Card) {
         if !matchOnTable {
             selectedCards = selectedCards.filter { $0.id != card.id }
+            noMatchOnTable = false
         } else {
             var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
             onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
@@ -112,6 +116,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             }
             selectedCards = []
             matchOnTable = false
+            noMatchOnTable = false
         }
     }
     
