@@ -23,7 +23,7 @@ struct SoloSetGameView: View {
             .padding()
             AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
                 if ((game.selectedCards.first { $0.id == card.id }) == nil) {
-                    CardView(card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
+                    CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
                         .padding(6.0)
                         .onTapGesture {
                             if game.selectedCards.count < 3 || game.matchOnTable {
@@ -33,7 +33,7 @@ struct SoloSetGameView: View {
                             }
                         }
                 } else {
-                    CardView(card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
+                    CardView(game: game, card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
                         .padding(6.0)
                         .onTapGesture {
                             game.deselect(card)
@@ -71,6 +71,7 @@ struct SoloSetGameView: View {
 }
 
 struct CardView: View {
+    let game: SoloSetGame
     let card: SoloSetGame.Card
     let selected: Bool
     let matchOnTable: Bool
@@ -98,7 +99,7 @@ struct CardView: View {
             }
             VStack {
                 cardContent()
-                    .foregroundColor(cardColor(card: card))
+                    .foregroundColor(game.getCardColor(card: card))
             }
             .padding(10)
         }
@@ -106,61 +107,8 @@ struct CardView: View {
     
     private func cardContent() -> some View {
         ForEach(0..<card.number.rawValue, id: \.self) {_ in
-            cardShape()
+            game.getCardShape(card: card)
                 .frame(height: 20)
-        }
-    }
-    
-    private func cardColor(card: SoloSetGame.Card) -> Color {
-        switch card.color {
-        case .red:
-            return Color.pink
-        case .green:
-            return Color.green
-        case .purple:
-            return Color.purple
-        }
-    }
-    
-    @ViewBuilder
-    private func cardShape() -> some View {
-        switch card.shape {
-        case .diamond:
-            switch card.shading {
-            case .solid:
-                Diamond()
-                    .fill()
-            case .striped:
-                Diamond()
-                    .opacity(0.4)
-            case .open:
-                Diamond()
-                    .stroke(lineWidth: 3)
-            }
-        case .rectangle:
-            switch card.shading {
-            case .solid:
-                Rectangle()
-                    .fill()
-            case .striped:
-                Rectangle()
-                    .opacity(0.4)
-            case .open:
-                Rectangle()
-                    .stroke(lineWidth: 3)
-            }
-        case .oval:
-            switch card.shading {
-            case .solid:
-                Capsule()
-                    .fill()
-            case .striped:
-                Capsule()
-                    .opacity(0.4)
-            case .open:
-                Capsule()
-                    .stroke(lineWidth: 3)
-            }
         }
     }
 }

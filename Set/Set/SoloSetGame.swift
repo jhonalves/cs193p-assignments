@@ -73,6 +73,59 @@ class SoloSetGame: ObservableObject {
         model.newGame(cardsSet: SoloSetGame.getCardsSet(), numberOfCardsToDeal: numberOfCardsToDeal)
     }
     
+    func getCardColor(card: SoloSetGame.Card) -> Color {
+        switch card.color {
+        case .red:
+            return Color.pink
+        case .green:
+            return Color.green
+        case .purple:
+            return Color.purple
+        }
+    }
+    
+    @ViewBuilder
+    func getCardShape(card: Card) -> some View {
+        switch card.shape {
+        case .diamond:
+            switch card.shading {
+            case .solid:
+                Diamond()
+                    .fill()
+            case .striped:
+                Diamond()
+                    .opacity(0.4)
+            case .open:
+                Diamond()
+                    .stroke(lineWidth: 3)
+            }
+        case .rectangle:
+            switch card.shading {
+            case .solid:
+                Rectangle()
+                    .fill()
+            case .striped:
+                Rectangle()
+                    .opacity(0.4)
+            case .open:
+                Rectangle()
+                    .stroke(lineWidth: 3)
+            }
+        case .oval:
+            switch card.shading {
+            case .solid:
+                Capsule()
+                    .fill()
+            case .striped:
+                Capsule()
+                    .opacity(0.4)
+            case .open:
+                Capsule()
+                    .stroke(lineWidth: 3)
+            }
+        }
+    }
+    
     enum cardColor: CaseIterable {
         case green
         case red
