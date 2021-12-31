@@ -55,7 +55,6 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                 deck.remove(at: 0)
             }
         }
-        
     }
     
     private mutating func cleanAfterMatch() {
@@ -75,14 +74,14 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             selectedCards.append(card)
             if selectedCards.count > 2 {
                 if checkMatch() {
-                    score += 1
+                    score += 3
                     matchOnTable = true
                     matchedCards.append(contentsOf: selectedCards)
                 }
                 else {
                     noMatchOnTable = true
                     if score > 0 {
-                        score -= 1
+                        score -= 3
                     }
                 }
             }
