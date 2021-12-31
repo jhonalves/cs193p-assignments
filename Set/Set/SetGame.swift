@@ -50,6 +50,16 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         onTableCards.append(contentsOf: newOnTable)
     }
     
+    mutating func replaceCard(cardPosition: Int) {
+        var cardIndex: Int
+        cardIndex = onTableCards.firstIndex { $0.id == selectedCards[cardPosition].id } ?? onTableCards.count + 1
+        onTableCards = onTableCards.filter { $0.id != selectedCards[cardPosition].id }
+        if deck.count > 0 {
+            onTableCards.insert(deck[0], at: cardIndex )
+            deck.remove(at: 0)
+        }
+    }
+    
     mutating func select(_ card: Card) {
         if !matchOnTable {
             selectedCards.append(card)
@@ -67,24 +77,9 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                 }
             }
         } else {
-            var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
-            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
-            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
+            replaceCard(cardPosition: 0)
+            replaceCard(cardPosition: 1)
+            replaceCard(cardPosition: 2)
             selectedCards = [card]
             matchOnTable = false
             noMatchOnTable = false
@@ -96,24 +91,9 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             selectedCards = selectedCards.filter { $0.id != card.id }
             noMatchOnTable = false
         } else {
-            var cardIndex = onTableCards.firstIndex { $0.id == selectedCards[0].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
-            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[1].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
-            cardIndex = onTableCards.firstIndex { $0.id == selectedCards[2].id }
-            onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
-            if deck.count > 0 {
-                onTableCards.insert(deck[0], at: cardIndex ?? onTableCards.count)
-                deck.remove(at: 0)
-            }
+            replaceCard(cardPosition: 0)
+            replaceCard(cardPosition: 1)
+            replaceCard(cardPosition: 2)
             selectedCards = []
             matchOnTable = false
             noMatchOnTable = false
