@@ -28,6 +28,8 @@ struct SoloSetGameView: View {
                         .onTapGesture {
                             if game.selectedCards.count < 3 || game.matchOnTable {
                                 game.select(card)
+                            } else if game.noMatchOnTable {
+                                game.select(card)
                             }
                         }
                 } else {

@@ -70,7 +70,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     }
     
     mutating func select(_ card: Card) {
-        if !matchOnTable {
+        if !matchOnTable && !noMatchOnTable {
             selectedCards.append(card)
             if selectedCards.count > 2 {
                 if checkMatch() {
@@ -85,6 +85,10 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                     }
                 }
             }
+        } else if noMatchOnTable {
+            selectedCards = [card]
+            matchOnTable = false
+            noMatchOnTable = false
         } else {
             cleanAfterMatch()
             selectedCards = [card]
