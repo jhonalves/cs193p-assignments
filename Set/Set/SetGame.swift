@@ -13,9 +13,9 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     private(set) var onTableCards: Array<Card>
     private(set) var matchedCards: Array<Card>
     private(set) var selectedCards: Array<Card>
-    var score: Int = 0
-    var matchOnTable: Bool = false
-    var noMatchOnTable: Bool = false
+    private(set) var score: Int = 0
+    private(set) var matchOnTable: Bool = false
+    private(set) var noMatchOnTable: Bool = false
     
     mutating func deal(numberOfCardsToDeal: Int) {
         var newDeck: Array<Card>
@@ -44,7 +44,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         deal(numberOfCardsToDeal: numberOfCardsToDeal)
     }
     
-    mutating func replaceCard(cardPosition: Int) {
+    private mutating func replaceCard(cardPosition: Int) {
         var cardIndex: Int
         cardIndex = onTableCards.firstIndex { $0.id == selectedCards[cardPosition].id } ?? onTableCards.count + 1
         onTableCards = onTableCards.filter { $0.id != selectedCards[cardPosition].id }
@@ -94,7 +94,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         }
     }
     
-    func countEquals<T: Equatable>(firstCard: T, secondCard: T, thirdCard: T) -> Bool {
+    private func countEquals<T: Equatable>(firstCard: T, secondCard: T, thirdCard: T) -> Bool {
         if (firstCard == secondCard &&
             secondCard == thirdCard) {
             // check if all 3 are equal
@@ -111,7 +111,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         return true
     }
     
-    mutating func checkMatch() -> Bool {
+    private mutating func checkMatch() -> Bool {
         var match:Bool
         
         match = countEquals(firstCard: selectedCards[0].color,
