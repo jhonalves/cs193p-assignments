@@ -54,6 +54,18 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         }
     }
     
+    private mutating func cleanAfterMatch() {
+        if onTableCards.count <= 14 {
+            replaceCard(cardPosition: 0)
+            replaceCard(cardPosition: 1)
+            replaceCard(cardPosition: 2)
+        } else {
+            onTableCards = onTableCards.filter { $0.id != selectedCards[0].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[1].id }
+            onTableCards = onTableCards.filter { $0.id != selectedCards[2].id }
+        }
+    }
+    
     mutating func select(_ card: Card) {
         if !matchOnTable {
             selectedCards.append(card)
@@ -71,9 +83,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                 }
             }
         } else {
-            replaceCard(cardPosition: 0)
-            replaceCard(cardPosition: 1)
-            replaceCard(cardPosition: 2)
+            cleanAfterMatch()
             selectedCards = [card]
             matchOnTable = false
             noMatchOnTable = false
@@ -85,9 +95,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             selectedCards = selectedCards.filter { $0.id != card.id }
             noMatchOnTable = false
         } else {
-            replaceCard(cardPosition: 0)
-            replaceCard(cardPosition: 1)
-            replaceCard(cardPosition: 2)
+            cleanAfterMatch()
             selectedCards = []
             matchOnTable = false
             noMatchOnTable = false
