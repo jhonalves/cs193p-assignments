@@ -40,18 +40,22 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         onTableCards = []
         matchedCards = []
         selectedCards = []
+        score = 0
+        matchOnTable = false
+        noMatchOnTable = false
         
         deal(numberOfCardsToDeal: numberOfCardsToDeal)
     }
     
     private mutating func replaceCard(cardPosition: Int) {
-        var cardIndex: Int
-        cardIndex = onTableCards.firstIndex { $0.id == selectedCards[cardPosition].id } ?? onTableCards.count + 1
-        onTableCards = onTableCards.filter { $0.id != selectedCards[cardPosition].id }
-        if deck.count > 0 {
-            onTableCards.insert(deck[0], at: cardIndex )
-            deck.remove(at: 0)
+        if let cardIndex = onTableCards.firstIndex(where: { $0.id == selectedCards[cardPosition].id }) {
+            onTableCards = onTableCards.filter { $0.id != selectedCards[cardPosition].id }
+            if deck.count > 0 {
+                onTableCards.insert(deck[0], at: cardIndex)
+                deck.remove(at: 0)
+            }
         }
+        
     }
     
     private mutating func cleanAfterMatch() {
