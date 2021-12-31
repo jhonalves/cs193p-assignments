@@ -100,7 +100,7 @@ class SoloSetGame: ObservableObject {
         model.select(card)
     }
     
-    func diselect(_ card: Card) {
-        model.diselect(card)
+    func deselect(_ card: Card) {
+        model.deselect(card)
     }
 }

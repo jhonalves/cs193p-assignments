@@ -103,7 +103,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         }
     }
     
-    mutating func diselect(_ card: Card) {
+    mutating func deselect(_ card: Card) {
         if !matchOnTable {
             selectedCards = selectedCards.filter { $0.id != card.id }
             noMatchOnTable = false

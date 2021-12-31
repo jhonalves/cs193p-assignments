@@ -36,7 +36,7 @@ struct SoloSetGameView: View {
                     CardView(card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
                         .padding(6.0)
                         .onTapGesture {
-                            game.diselect(card)
+                            game.deselect(card)
                         }
                 }
             }
