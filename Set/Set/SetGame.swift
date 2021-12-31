@@ -120,54 +120,43 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         }
     }
     
-    mutating func checkMatch() -> Bool {
-        if (selectedCards[0].color == selectedCards[1].color &&
-            selectedCards[1].color == selectedCards[2].color) {
-            print(selectedCards[0].color, selectedCards[1].color, selectedCards[2].color)
-            //pass
-        } else if (selectedCards[0].color != selectedCards[1].color &&
-                   selectedCards[1].color != selectedCards[2].color &&
-                   selectedCards[0].color != selectedCards[2].color ) {
-            print(selectedCards[0].color, selectedCards[1].color, selectedCards[2].color)
+    func countEquals<T: Equatable>(firstCard: T, secondCard: T, thirdCard: T) -> Bool {
+        if (firstCard == secondCard &&
+            secondCard == thirdCard) {
+            // check if all 3 are equal
+        } else if (firstCard != secondCard &&
+                   secondCard != thirdCard &&
+                   firstCard != thirdCard ) {
+            // check if all 3 are different
         } else {
+            // non matching cards
             return false
         }
         
-        if (selectedCards[0].shape == selectedCards[1].shape &&
-            selectedCards[1].shape == selectedCards[2].shape) {
-            print(selectedCards[0].shape, selectedCards[1].shape, selectedCards[2].shape)
-            //pass
-        } else if (selectedCards[0].shape != selectedCards[1].shape &&
-                   selectedCards[1].shape != selectedCards[2].shape &&
-                   selectedCards[0].shape != selectedCards[2].shape ) {
-            print(selectedCards[0].shape, selectedCards[1].shape, selectedCards[2].shape)
-        } else {
-            return false
-        }
-        
-        if (selectedCards[0].number == selectedCards[1].number && selectedCards[1].number == selectedCards[2].number) {
-            print(selectedCards[0].number, selectedCards[1].number, selectedCards[2].number)
-            //pass
-        } else if (selectedCards[0].number != selectedCards[1].number &&
-                   selectedCards[1].number != selectedCards[2].number &&
-                   selectedCards[0].number != selectedCards[2].number ) {
-            print(selectedCards[0].number, selectedCards[1].number, selectedCards[2].number)
-        } else {
-            return false
-        }
-        
-        if (selectedCards[0].shading == selectedCards[1].shading && selectedCards[1].shading == selectedCards[2].shading) {
-            print(selectedCards[0].shading, selectedCards[1].shading, selectedCards[2].shading)
-            //pass
-        } else if (selectedCards[0].shading != selectedCards[1].shading &&
-                   selectedCards[1].shading != selectedCards[2].shading &&
-                   selectedCards[0].shading != selectedCards[2].shading ) {
-            print(selectedCards[0].shading, selectedCards[1].shading, selectedCards[2].shading)
-        } else {
-            return false
-        }
-        
+        // matching cards
         return true
+    }
+    
+    mutating func checkMatch() -> Bool {
+        var match:Bool
+        
+        match = countEquals(firstCard: selectedCards[0].color,
+                    secondCard: selectedCards[1].color,
+                    thirdCard: selectedCards[2].color)
+        
+        if match { match = countEquals(firstCard: selectedCards[0].shape,
+                                       secondCard: selectedCards[1].shape,
+                                       thirdCard: selectedCards[2].shape)}
+        
+        if match { match = countEquals(firstCard: selectedCards[0].number,
+                                       secondCard: selectedCards[1].number,
+                                       thirdCard: selectedCards[2].number)}
+        
+        if match { match = countEquals(firstCard: selectedCards[0].shading,
+                                       secondCard: selectedCards[1].shading,
+                                       thirdCard: selectedCards[2].shading)}
+        
+        return match
     }
     
     init(cardsSet: Array<Card>) {
