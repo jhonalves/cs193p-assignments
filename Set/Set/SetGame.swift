@@ -21,16 +21,22 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         var newDeck: Array<Card>
         var newOnTable: Array<Card>
         
-        if deck.count >= numberOfCardsToDeal {
-            newDeck = Array(deck[numberOfCardsToDeal...])
-            newOnTable = Array(deck[..<numberOfCardsToDeal])
-            deck = newDeck
-            onTableCards.append(contentsOf: newOnTable)
+        if !matchOnTable {
+            if deck.count >= numberOfCardsToDeal {
+                newDeck = Array(deck[numberOfCardsToDeal...])
+                newOnTable = Array(deck[..<numberOfCardsToDeal])
+                deck = newDeck
+                onTableCards.append(contentsOf: newOnTable)
+            } else {
+                newDeck = []
+                newOnTable = deck
+                deck = newDeck
+                onTableCards.append(contentsOf: newOnTable)
+            }
         } else {
-            newDeck = []
-            newOnTable = deck
-            deck = newDeck
-            onTableCards.append(contentsOf: newOnTable)
+            replaceCard(cardPosition: 0)
+            replaceCard(cardPosition: 1)
+            replaceCard(cardPosition: 2)
         }
     }
     
