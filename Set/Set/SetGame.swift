@@ -16,6 +16,8 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     private(set) var score: Int = 0
     private(set) var matchOnTable: Bool = false
     private(set) var noMatchOnTable: Bool = false
+    private(set) var endGame: Bool = false
+    private(set) var onTableCombinations: Bool = true
     
     mutating func deal(numberOfCardsToDeal: Int) {
         var newDeck: Array<Card>
@@ -38,6 +40,9 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             replaceCard(cardPosition: 1)
             replaceCard(cardPosition: 2)
         }
+        
+        checkOnTableCombinations()
+        checkEndGame()
     }
     
     mutating func newGame(cardsSet: Array<Card>, numberOfCardsToDeal: Int) {
@@ -79,7 +84,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         if !matchOnTable && !noMatchOnTable {
             selectedCards.append(card)
             if selectedCards.count > 2 {
-                if checkMatch() {
+                if checkMatch(cardsToCheck: selectedCards, firstCardIndex: 0, secondCardIndex: 1, thirdCardIndex: 2) {
                     score += 3
                     matchOnTable = true
                     matchedCards.append(contentsOf: selectedCards)
@@ -101,6 +106,8 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             matchOnTable = false
             noMatchOnTable = false
         }
+        checkEndGame()
+        checkOnTableCombinations()
     }
     
     mutating func deselect(_ card: Card) {
@@ -113,6 +120,8 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             matchOnTable = false
             noMatchOnTable = false
         }
+        checkEndGame()
+        checkOnTableCombinations()
     }
     
     private func countEquals<T: Equatable>(firstCard: T, secondCard: T, thirdCard: T) -> Bool {
@@ -132,26 +141,54 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
         return true
     }
     
-    private mutating func checkMatch() -> Bool {
+    private mutating func checkMatch(cardsToCheck: Array<Card>, firstCardIndex: Int, secondCardIndex: Int, thirdCardIndex: Int) -> Bool {
         var match:Bool
         
-        match = countEquals(firstCard: selectedCards[0].color,
-                    secondCard: selectedCards[1].color,
-                    thirdCard: selectedCards[2].color)
+        match = countEquals(firstCard: cardsToCheck[firstCardIndex].color,
+                    secondCard: cardsToCheck[secondCardIndex].color,
+                    thirdCard: cardsToCheck[thirdCardIndex].color)
         
-        if match { match = countEquals(firstCard: selectedCards[0].shape,
-                                       secondCard: selectedCards[1].shape,
-                                       thirdCard: selectedCards[2].shape)}
+        if match { match = countEquals(firstCard: cardsToCheck[firstCardIndex].shape,
+                                       secondCard: cardsToCheck[secondCardIndex].shape,
+                                       thirdCard: cardsToCheck[thirdCardIndex].shape)}
         
-        if match { match = countEquals(firstCard: selectedCards[0].number,
-                                       secondCard: selectedCards[1].number,
-                                       thirdCard: selectedCards[2].number)}
+        if match { match = countEquals(firstCard: cardsToCheck[firstCardIndex].number,
+                                       secondCard: cardsToCheck[secondCardIndex].number,
+                                       thirdCard: cardsToCheck[thirdCardIndex].number)}
         
-        if match { match = countEquals(firstCard: selectedCards[0].shading,
-                                       secondCard: selectedCards[1].shading,
-                                       thirdCard: selectedCards[2].shading)}
+        if match { match = countEquals(firstCard: cardsToCheck[firstCardIndex].shading,
+                                       secondCard: cardsToCheck[secondCardIndex].shading,
+                                       thirdCard: cardsToCheck[thirdCardIndex].shading)}
         
         return match
+    }
+    
+    private mutating func checkCombinations(cardsToCheck: Array<Card>) -> Bool {
+        var match = false
+        print(cardsToCheck.count)
+        
+        for firstCardIndex in 0..<cardsToCheck.count {
+            for secondCardIndex in 0..<cardsToCheck.count {
+                for thirdCardIndex in 0..<cardsToCheck.count {
+                    if (firstCardIndex != secondCardIndex && secondCardIndex != thirdCardIndex && firstCardIndex != thirdCardIndex && !match) {
+                        match = checkMatch(cardsToCheck: cardsToCheck, firstCardIndex: firstCardIndex, secondCardIndex: secondCardIndex, thirdCardIndex: thirdCardIndex)
+                        //print(firstCardIndex + 1, secondCardIndex + 1, thirdCardIndex + 1)
+                    }
+                }
+            }
+        }
+        
+        return match
+    }
+    
+    private mutating func checkOnTableCombinations() {
+        onTableCombinations = checkCombinations(cardsToCheck: onTableCards)
+    }
+    
+    private mutating func checkEndGame() {
+        let availablesCards = onTableCards + deck
+        
+        endGame = !checkCombinations(cardsToCheck: availablesCards)
     }
     
     init(cardsSet: Array<Card>) {

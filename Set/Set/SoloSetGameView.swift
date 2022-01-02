@@ -12,34 +12,23 @@ struct SoloSetGameView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Set Game").font(.largeTitle)
-                Spacer()
-                VStack {
-                    Text("Score").font(.title)
-                    Text(String(game.score)).font(.largeTitle)
+            VStack {
+                HStack {
+                    Text("Set Game").font(.largeTitle)
+                    Spacer()
+                    VStack {
+                        if game.endGame {
+                            Text("Final Score").font(.title)
+                        } else {
+                            Text("Score").font(.title)
+                        }
+                        Text(String(game.score)).font(.largeTitle)
+                    }
                 }
+                if game.endGame {Text("No more combinations")}
             }
             .padding()
-            AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
-                if ((game.selectedCards.first { $0.id == card.id }) == nil) {
-                    CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
-                        .padding(6.0)
-                        .onTapGesture {
-                            if game.selectedCards.count < 3 || game.matchOnTable {
-                                game.select(card)
-                            } else if game.noMatchOnTable {
-                                game.select(card)
-                            }
-                        }
-                } else {
-                    CardView(game: game, card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
-                        .padding(6.0)
-                        .onTapGesture {
-                            game.deselect(card)
-                        }
-                }
-            }
+            if game.onTableCombinations { cards } else { cards.opacity(0.5) }
             Spacer()
             HStack {
                 newGameButton.padding()
@@ -49,6 +38,28 @@ struct SoloSetGameView: View {
                 } else {
                     dealButton.padding().disabled(true)
                 }
+            }
+        }
+    }
+    
+    var cards: some View {
+        AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
+            if ((game.selectedCards.first { $0.id == card.id }) == nil) {
+                CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
+                    .padding(6.0)
+                    .onTapGesture {
+                        if game.selectedCards.count < 3 || game.matchOnTable && !game.endGame {
+                            game.select(card)
+                        } else if game.noMatchOnTable && !game.endGame {
+                            game.select(card)
+                        }
+                    }
+            } else {
+                CardView(game: game, card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
+                    .padding(6.0)
+                    .onTapGesture {
+                        game.deselect(card)
+                    }
             }
         }
     }

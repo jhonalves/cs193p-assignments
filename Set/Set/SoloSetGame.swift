@@ -64,6 +64,12 @@ class SoloSetGame: ObservableObject {
     var noMatchOnTable: Bool {
         model.noMatchOnTable
     }
+    var endGame: Bool {
+        model.endGame
+    }
+    var onTableCombinations: Bool {
+        model.onTableCombinations
+    }
     
     func deal(numberOfCardsToDeal: Int) {
         model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
