@@ -165,14 +165,12 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     
     private mutating func checkCombinations(cardsToCheck: Array<Card>) -> Bool {
         var match = false
-        print(cardsToCheck.count)
         
         for firstCardIndex in 0..<cardsToCheck.count {
             for secondCardIndex in 0..<cardsToCheck.count {
                 for thirdCardIndex in 0..<cardsToCheck.count {
                     if (firstCardIndex != secondCardIndex && secondCardIndex != thirdCardIndex && firstCardIndex != thirdCardIndex && !match) {
                         match = checkMatch(cardsToCheck: cardsToCheck, firstCardIndex: firstCardIndex, secondCardIndex: secondCardIndex, thirdCardIndex: thirdCardIndex)
-                        //print(firstCardIndex + 1, secondCardIndex + 1, thirdCardIndex + 1)
                     }
                 }
             }

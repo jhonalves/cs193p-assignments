@@ -71,14 +71,6 @@ class SoloSetGame: ObservableObject {
         model.onTableCombinations
     }
     
-    func deal(numberOfCardsToDeal: Int) {
-        model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
-    }
-    
-    func newGame(numberOfCardsToDeal: Int = 12) {
-        model.newGame(cardsSet: SoloSetGame.getCardsSet(), numberOfCardsToDeal: numberOfCardsToDeal)
-    }
-    
     func getCardColor(card: SoloSetGame.Card) -> Color {
         switch card.color {
         case .red:
@@ -161,5 +153,13 @@ class SoloSetGame: ObservableObject {
     
     func deselect(_ card: Card) {
         model.deselect(card)
+    }
+    
+    func deal(numberOfCardsToDeal: Int) {
+        model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
+    }
+    
+    func newGame(numberOfCardsToDeal: Int = 12) {
+        model.newGame(cardsSet: SoloSetGame.getCardsSet(), numberOfCardsToDeal: numberOfCardsToDeal)
     }
 }
