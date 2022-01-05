@@ -91,35 +91,37 @@ struct CardView: View {
     @ViewBuilder var body: some View {
         let shape = RoundedRectangle(cornerRadius: 10)
         
-        ZStack {
-            shape
-                .fill()
-                .foregroundColor(.white)
-            if matchOnTable {
-                shape.strokeBorder(lineWidth: 6)
-                    .foregroundColor(.green)
-            } else if noMatchOnTable {
-                shape.strokeBorder(lineWidth: 6)
-                    .foregroundColor(.red)
-            } else if !selected {
-                shape.strokeBorder(lineWidth: 4)
-                    .foregroundColor(.black)
-            } else {
-                shape.strokeBorder(lineWidth: 4)
-                    .foregroundColor(.blue)
+        GeometryReader { geometry in
+            ZStack {
+                shape
+                    .fill()
+                    .foregroundColor(.white)
+                if matchOnTable {
+                    shape.strokeBorder(lineWidth: 6)
+                        .foregroundColor(.green)
+                } else if noMatchOnTable {
+                    shape.strokeBorder(lineWidth: 6)
+                        .foregroundColor(.red)
+                } else if !selected {
+                    shape.strokeBorder(lineWidth: 4)
+                        .foregroundColor(.black)
+                } else {
+                    shape.strokeBorder(lineWidth: 4)
+                        .foregroundColor(.blue)
+                }
+                VStack {
+                    cardContent(height: geometry.size.height)
+                        .foregroundColor(game.getCardColor(card: card))
+                }
+                .padding(10)
             }
-            VStack {
-                cardContent()
-                    .foregroundColor(game.getCardColor(card: card))
-            }
-            .padding(10)
         }
     }
     
-    private func cardContent() -> some View {
+    private func cardContent(height: CGFloat) -> some View {
         ForEach(0..<card.number.rawValue, id: \.self) {_ in
             game.getCardShape(card: card)
-                .frame(height: 20)
+                .frame(maxHeight: height / 6 )
         }
     }
 }
