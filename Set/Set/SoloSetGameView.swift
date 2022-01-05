@@ -22,7 +22,9 @@ struct SoloSetGameView: View {
                         } else {
                             Text("Score").font(.title)
                         }
-                        Text(String(game.score)).font(.largeTitle)
+                        withAnimation {
+                            Text(String(game.score)).font(.largeTitle)
+                        }
                     }
                 }
                 if game.endGame {Text("No more combinations")}
@@ -31,12 +33,12 @@ struct SoloSetGameView: View {
             if game.onTableCombinations { cards } else { cards.opacity(0.5) }
             Spacer()
             HStack {
-                newGameButton.padding()
+                newGameButton.font(.largeTitle).padding()
                 Spacer()
                 if !game.deck.isEmpty {
-                    dealButton.padding()
+                    dealButton.font(.largeTitle).padding()
                 } else {
-                    dealButton.padding().disabled(true)
+                    dealButton.font(.largeTitle).padding().disabled(true)
                 }
             }
         }
@@ -65,19 +67,17 @@ struct SoloSetGameView: View {
     }
     
     var newGameButton: some View {
-        Button (action: {
+        Button("New Game") {
             game.newGame()
-        }, label: {
-            Text("New Game").font(.largeTitle)
-        })
+        }
     }
     
     var dealButton: some View {
-        Button (action: {
-            game.deal(numberOfCardsToDeal: 3)
-        }, label: {
-            Text("Deal").font(.largeTitle)
-        })
+        Button ("Deal") {
+            withAnimation(.easeInOut) {
+                game.deal(numberOfCardsToDeal: 3)
+            }
+        }
     }
 }
 
