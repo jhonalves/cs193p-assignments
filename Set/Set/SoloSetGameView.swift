@@ -71,10 +71,12 @@ struct SoloSetGameView: View {
     
     var bottom: some View {
         HStack {
+            matchedCards
+            Spacer()
             newGameButton.font(.largeTitle).padding()
             Spacer()
-            deck.padding(.horizontal)
-        }
+            deck
+        }.padding(.horizontal)
     }
     
     var newGameButton: some View {
@@ -96,27 +98,37 @@ struct SoloSetGameView: View {
     var deck: some View {
         ZStack {
             ForEach (game.deck) { card in
-                ZStack {
-                }
-                .cardify(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
+                CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
                 .matchedGeometryEffect(id: card.id, in: dealingNamespace)
             }
         }
-        .frame(width: CGFloat(90 * 2/3), height: CGFloat(90))
+        .frame(width: gameConstants.bottomCardsWidth, height: gameConstants.bottomCardsHeight)
         .onTapGesture {
             if !game.deck.isEmpty {
                 withAnimation {
-                    game.deal(numberOfCardsToDeal: 3)
+                    game.deal(numberOfCardsToDeal: gameConstants.dealQuantity)
                 }
             }
         }
     }
     
+    var matchedCards: some View {
+        ZStack {
+            ForEach (game.matchedCards) { card in
+                CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
+                .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+            }
+        }
+        .frame(width: gameConstants.bottomCardsWidth, height: gameConstants.bottomCardsHeight)
+    }
+    
     private struct gameConstants {
-        static let disabledOpacity = 0.5
-        static let maxCards = 3
-        static let cardsAspectRatio: Double = 2/3
-        static let dealQuantity = 3
+        static let disabledOpacity: Double = 0.5
+        static let maxCards: Int = 3
+        static let dealQuantity: Int = 3
+        static let cardsAspectRatio: CGFloat = 2/3
+        static let bottomCardsHeight: CGFloat = 90
+        static let bottomCardsWidth: CGFloat = bottomCardsHeight * cardsAspectRatio
     }
 }
 

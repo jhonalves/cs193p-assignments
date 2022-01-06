@@ -36,6 +36,7 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
                 onTableCards.append(contentsOf: newOnTable)
             }
         } else {
+            matchedCards.append(contentsOf: selectedCards)
             replaceCard(cardPosition: 0)
             replaceCard(cardPosition: 1)
             replaceCard(cardPosition: 2)
