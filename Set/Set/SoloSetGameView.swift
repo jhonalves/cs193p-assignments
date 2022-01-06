@@ -10,37 +10,13 @@ import SwiftUI
 struct SoloSetGameView: View {
     @ObservedObject var game: SoloSetGame
     
+    @Namespace private var dealingNamespace
+    
     var body: some View {
         VStack {
-            VStack {
-                HStack {
-                    Text("Set Game").font(.largeTitle)
-                    Spacer()
-                    VStack {
-                        if game.endGame {
-                            Text("Final Score").font(.title)
-                        } else {
-                            Text("Score").font(.title)
-                        }
-                        withAnimation {
-                            Text(String(game.score)).font(.largeTitle)
-                        }
-                    }
-                }
-                if game.endGame {Text("No more combinations")}
-            }
-            .padding()
+            top.padding()
             if game.onTableCombinations { cards } else { cards.opacity(gameConstants.disabledOpacity) }
-            Spacer()
-            HStack {
-                newGameButton.font(.largeTitle).padding()
-                Spacer()
-                if !game.deck.isEmpty {
-                    dealButton.font(.largeTitle).padding()
-                } else {
-                    dealButton.font(.largeTitle).padding().disabled(true)
-                }
-            }
+            bottom
         }
     }
     
@@ -49,6 +25,7 @@ struct SoloSetGameView: View {
             if ((game.selectedCards.first { $0.id == card.id }) == nil) {
                 CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
                     .padding(6.0)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .onTapGesture {
                         if game.selectedCards.count < gameConstants.maxCards || game.matchOnTable && !game.endGame {
                             game.select(card)
@@ -59,6 +36,7 @@ struct SoloSetGameView: View {
             } else {
                 CardView(game: game, card: card, selected: true, matchOnTable: game.matchOnTable, noMatchOnTable: game.noMatchOnTable)
                     .padding(6.0)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .onTapGesture {
                         game.deselect(card)
                     }
@@ -66,9 +44,36 @@ struct SoloSetGameView: View {
         }
     }
     
+    var top: some View {
+        HStack {
+            Text("Set Game").font(.largeTitle)
+            Spacer()
+            VStack {
+                if game.endGame {
+                    Text("Final Score").font(.title)
+                } else {
+                    Text("Score").font(.title)
+                }
+                withAnimation {
+                    Text(String(game.score)).font(.largeTitle)
+                }
+            }
+        }
+    }
+    
+    var bottom: some View {
+        HStack {
+            newGameButton.font(.largeTitle).padding()
+            Spacer()
+            deck.padding(.horizontal)
+        }
+    }
+    
     var newGameButton: some View {
         Button("New Game") {
-            game.newGame()
+            withAnimation {
+                game.newGame()
+            }
         }
     }
     
@@ -76,6 +81,25 @@ struct SoloSetGameView: View {
         Button ("Deal") {
             withAnimation(.easeInOut) {
                 game.deal(numberOfCardsToDeal: gameConstants.dealQuantity)
+            }
+        }
+    }
+    
+    var deck: some View {
+        ZStack {
+            ForEach (game.deck) { card in
+                ZStack {
+                }
+                .cardify(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
+                .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+            }
+        }
+        .frame(width: CGFloat(90 * 2/3), height: CGFloat(90))
+        .onTapGesture {
+            if !game.deck.isEmpty {
+                withAnimation {
+                    game.deal(numberOfCardsToDeal: 3)
+                }
             }
         }
     }
