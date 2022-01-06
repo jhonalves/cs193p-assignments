@@ -14,6 +14,23 @@ struct Cardify: Animatable, ViewModifier {
     let matchOnTable: Bool
     let noMatchOnTable: Bool
     
+    init(game: SoloSetGame, card: SoloSetGame.Card, selected: Bool, matchOnTable: Bool, noMatchOnTable: Bool) {
+        rotation = ((game.deck.first { $0.id == card.id }) != nil) ? 0 : 180
+        
+        self.game = game
+        self.card = card
+        self.selected = selected
+        self.matchOnTable = matchOnTable
+        self.noMatchOnTable = noMatchOnTable
+    }
+    
+    var animatableData: Double {
+        get { rotation }
+        set { rotation = newValue }
+    }
+    
+    var rotation: Double
+    
     func body(content: Content) -> some View {
         ZStack {
             let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
@@ -37,12 +54,13 @@ struct Cardify: Animatable, ViewModifier {
                     .strokeBorder(lineWidth: DrawingConstants.lineWidth)
                     .foregroundColor(.blue)
             }
-            if ((game.deck.first { $0.id == card.id }) != nil) {
+            if rotation < 90 {
                 Text("👾")
             } else {
                 content
             }
         }
+        .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
     
     private struct DrawingConstants{

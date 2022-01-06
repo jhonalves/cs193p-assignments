@@ -27,21 +27,19 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
             if deck.count >= numberOfCardsToDeal {
                 newDeck = Array(deck[numberOfCardsToDeal...])
                 newOnTable = Array(deck[..<numberOfCardsToDeal])
-                deck = newDeck
-                onTableCards.append(contentsOf: newOnTable)
             } else {
                 newDeck = []
                 newOnTable = deck
-                deck = newDeck
-                onTableCards.append(contentsOf: newOnTable)
             }
+            deck = newDeck
         } else {
-            matchedCards.append(contentsOf: selectedCards)
+            newOnTable = selectedCards
             replaceCard(cardPosition: 0)
             replaceCard(cardPosition: 1)
             replaceCard(cardPosition: 2)
         }
         
+        onTableCards.append(contentsOf: newOnTable)
         checkOnTableCombinations()
         checkEndGame()
     }
@@ -200,8 +198,6 @@ struct SetGame<CardColor, CardShape, CardNumber, CardShading> where CardColor: E
     }
     
     struct Card: Identifiable {
-        var isOnDeck = true
-        var isMatched = false
         var color: CardColor
         var shape: CardShape
         var number: CardNumber

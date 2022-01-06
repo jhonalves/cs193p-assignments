@@ -95,17 +95,22 @@ struct SoloSetGameView: View {
         }
     }
     
+    private func zIndex(of card: SoloSetGame.Card) -> Double {
+        -Double(game.cards.firstIndex(where: { $0.id == card.id }) ?? 0)
+    }
+    
     var deck: some View {
         ZStack {
             ForEach (game.deck) { card in
                 CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
-                .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .zIndex(zIndex(of: card))
             }
         }
         .frame(width: gameConstants.bottomCardsWidth, height: gameConstants.bottomCardsHeight)
         .onTapGesture {
             if !game.deck.isEmpty {
-                withAnimation {
+                withAnimation(.easeInOut) {
                     game.deal(numberOfCardsToDeal: gameConstants.dealQuantity)
                 }
             }
