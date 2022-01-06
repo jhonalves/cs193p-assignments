@@ -159,7 +159,7 @@ class SoloSetGame: ObservableObject {
         model.deal(numberOfCardsToDeal: numberOfCardsToDeal)
     }
     
-    func newGame(numberOfCardsToDeal: Int = 21) {
+    func newGame(numberOfCardsToDeal: Int = 12) {
         model.newGame(cardsSet: SoloSetGame.getCardsSet(), numberOfCardsToDeal: numberOfCardsToDeal)
     }
 }

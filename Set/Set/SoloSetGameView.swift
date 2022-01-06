@@ -30,7 +30,7 @@ struct SoloSetGameView: View {
                 if game.endGame {Text("No more combinations")}
             }
             .padding()
-            if game.onTableCombinations { cards } else { cards.opacity(0.5) }
+            if game.onTableCombinations { cards } else { cards.opacity(gameConstants.disabledOpacity) }
             Spacer()
             HStack {
                 newGameButton.font(.largeTitle).padding()
@@ -45,12 +45,12 @@ struct SoloSetGameView: View {
     }
     
     var cards: some View {
-        AspectVGrid(items: game.onTableCards, aspectRatio: 2/3) { card in
+        AspectVGrid(items: game.onTableCards, aspectRatio: gameConstants.cardsAspectRatio) { card in
             if ((game.selectedCards.first { $0.id == card.id }) == nil) {
                 CardView(game: game, card: card, selected: false, matchOnTable: false, noMatchOnTable: false)
                     .padding(6.0)
                     .onTapGesture {
-                        if game.selectedCards.count < 3 || game.matchOnTable && !game.endGame {
+                        if game.selectedCards.count < gameConstants.maxCards || game.matchOnTable && !game.endGame {
                             game.select(card)
                         } else if game.noMatchOnTable && !game.endGame {
                             game.select(card)
@@ -75,9 +75,16 @@ struct SoloSetGameView: View {
     var dealButton: some View {
         Button ("Deal") {
             withAnimation(.easeInOut) {
-                game.deal(numberOfCardsToDeal: 3)
+                game.deal(numberOfCardsToDeal: gameConstants.dealQuantity)
             }
         }
+    }
+    
+    private struct gameConstants {
+        static let disabledOpacity = 0.5
+        static let maxCards = 3
+        static let cardsAspectRatio: Double = 2/3
+        static let dealQuantity = 3
     }
 }
 
@@ -89,24 +96,24 @@ struct CardView: View {
     let noMatchOnTable: Bool
     
     @ViewBuilder var body: some View {
-        let shape = RoundedRectangle(cornerRadius: 10)
         
         GeometryReader { geometry in
             ZStack {
+                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
                 shape
                     .fill()
                     .foregroundColor(.white)
                 if matchOnTable {
-                    shape.strokeBorder(lineWidth: 6)
+                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                         .foregroundColor(.green)
                 } else if noMatchOnTable {
-                    shape.strokeBorder(lineWidth: 6)
+                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                         .foregroundColor(.red)
                 } else if !selected {
-                    shape.strokeBorder(lineWidth: 4)
+                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                         .foregroundColor(.black)
                 } else {
-                    shape.strokeBorder(lineWidth: 4)
+                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                         .foregroundColor(.blue)
                 }
                 VStack {
@@ -123,6 +130,12 @@ struct CardView: View {
             game.getCardShape(card: card)
                 .frame(maxHeight: height / 6 )
         }
+    }
+    
+    private struct DrawingConstants{
+        static var cornerRadius: CGFloat = 10
+        static var lineWidth: CGFloat = 4
+        static var fontScale: CGFloat = 0.75
     }
 }
 
