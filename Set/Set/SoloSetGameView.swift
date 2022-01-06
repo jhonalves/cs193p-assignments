@@ -117,18 +117,10 @@ struct CardView: View {
                         .foregroundColor(.blue)
                 }
                 VStack {
-                    cardContent(height: geometry.size.height)
-                        .foregroundColor(game.getCardColor(card: card))
+                    CardContent(card: card,height: geometry.size.height)
                 }
                 .padding(10)
             }
-        }
-    }
-    
-    private func cardContent(height: CGFloat) -> some View {
-        ForEach(0..<card.number.rawValue, id: \.self) {_ in
-            game.getCardShape(card: card)
-                .frame(maxHeight: height / 6 )
         }
     }
     
