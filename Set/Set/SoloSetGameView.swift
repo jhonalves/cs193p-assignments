@@ -27,8 +27,12 @@ struct SoloSetGameView: View {
                     .padding(6.0)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .onTapGesture {
-                        if game.selectedCards.count < gameConstants.maxCards || game.matchOnTable && !game.endGame {
+                        if game.selectedCards.count < gameConstants.maxCards {
                             game.select(card)
+                        } else if game.matchOnTable && !game.endGame {
+                            withAnimation {
+                                game.select(card)
+                            }
                         } else if game.noMatchOnTable && !game.endGame {
                             game.select(card)
                         }
@@ -38,7 +42,13 @@ struct SoloSetGameView: View {
                     .padding(6.0)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .onTapGesture {
-                        game.deselect(card)
+                        if game.matchOnTable && !game.endGame {
+                            withAnimation {
+                                game.deselect(card)
+                            }
+                        } else {
+                            game.deselect(card)
+                        }
                     }
             }
         }
@@ -54,9 +64,7 @@ struct SoloSetGameView: View {
                 } else {
                     Text("Score").font(.title)
                 }
-                withAnimation {
-                    Text(String(game.score)).font(.largeTitle)
-                }
+                Text(String(game.score)).font(.largeTitle)
             }
         }
     }
