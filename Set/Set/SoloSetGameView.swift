@@ -96,31 +96,14 @@ struct CardView: View {
     let noMatchOnTable: Bool
     
     @ViewBuilder var body: some View {
-        
         GeometryReader { geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                shape
-                    .fill()
-                    .foregroundColor(.white)
-                if matchOnTable {
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                        .foregroundColor(.green)
-                } else if noMatchOnTable {
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                        .foregroundColor(.red)
-                } else if !selected {
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                        .foregroundColor(.black)
-                } else {
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                        .foregroundColor(.blue)
-                }
                 VStack {
                     CardContent(card: card,height: geometry.size.height)
                 }
                 .padding(10)
             }
+            .cardify(game: game, card: card, selected: selected, matchOnTable: matchOnTable, noMatchOnTable: noMatchOnTable)
         }
     }
     

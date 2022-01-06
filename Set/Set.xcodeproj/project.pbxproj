@@ -12,6 +12,8 @@
 		16031E962773B2DD005F82CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16031E952773B2DD005F82CB /* Assets.xcassets */; };
 		16031E992773B2DD005F82CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16031E982773B2DD005F82CB /* Preview Assets.xcassets */; };
 		162B22E92777D0D5002BD101 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B22E82777D0D5002BD101 /* AspectVGrid.swift */; };
+		16D1D87A2787742A0025FC83 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D1D8792787742A0025FC83 /* Cardify.swift */; };
+		16D1D87C278779D80025FC83 /* CardContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D1D87B278779D80025FC83 /* CardContent.swift */; };
 		16D31971277ABA41006F2DC4 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D31970277ABA41006F2DC4 /* SetGame.swift */; };
 		16D31973277ACCE4006F2DC4 /* SoloSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */; };
 		16D44176277E0C1B002CC13E /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D44175277E0C1B002CC13E /* Diamond.swift */; };
@@ -24,6 +26,8 @@
 		16031E952773B2DD005F82CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16031E982773B2DD005F82CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		162B22E82777D0D5002BD101 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		16D1D8792787742A0025FC83 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		16D1D87B278779D80025FC83 /* CardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContent.swift; sourceTree = "<group>"; };
 		16D31970277ABA41006F2DC4 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoloSetGame.swift; sourceTree = "<group>"; };
 		16D44175277E0C1B002CC13E /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
@@ -62,7 +66,9 @@
 				16031E912773B2DB005F82CB /* SetApp.swift */,
 				16D31970277ABA41006F2DC4 /* SetGame.swift */,
 				16D31972277ACCE4006F2DC4 /* SoloSetGame.swift */,
+				16D1D87B278779D80025FC83 /* CardContent.swift */,
 				16031E932773B2DB005F82CB /* SoloSetGameView.swift */,
+				16D1D8792787742A0025FC83 /* Cardify.swift */,
 				16D44175277E0C1B002CC13E /* Diamond.swift */,
 				162B22E82777D0D5002BD101 /* AspectVGrid.swift */,
 				16031E952773B2DD005F82CB /* Assets.xcassets */,
@@ -150,6 +156,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				16D44176277E0C1B002CC13E /* Diamond.swift in Sources */,
+				16D1D87C278779D80025FC83 /* CardContent.swift in Sources */,
+				16D1D87A2787742A0025FC83 /* Cardify.swift in Sources */,
 				16031E942773B2DB005F82CB /* SoloSetGameView.swift in Sources */,
 				16031E922773B2DB005F82CB /* SetApp.swift in Sources */,
 				16D31971277ABA41006F2DC4 /* SetGame.swift in Sources */,
